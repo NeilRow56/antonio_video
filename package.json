@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:webhook": "ngrok http --url=bat-well-coral.ngrok-free.app 3000",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -33,6 +34,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
+    "concurrently": "^9.1.2",
     "dotenv": "^16.5.0",
     "drizzle-orm": "^0.43.1",
     "eslint-config-prettier": "^10.1.2",
@@ -43,6 +45,7 @@
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.56.1",
     "sonner": "^2.0.3",
+    "svix": "^1.64.1",
     "tailwind-merge": "^3.2.0",
     "terser-webpack-plugin": "^5.3.14",
     "zod": "^3.24.3"
