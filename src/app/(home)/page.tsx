@@ -1,3 +1,8 @@
+'use client'
+
+import { trpc } from '@/trpc/client'
+
 export default function Home() {
-  return <div className=''>Home Page</div>
+  const { data } = trpc.hello.useQuery({ text: 'Hello Antonio' })
+  return <div className=''>Client component says: {data?.greeting}</div>
 }
