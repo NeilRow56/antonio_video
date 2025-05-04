@@ -8,6 +8,20 @@
       "when": 1746077685541,
       "tag": "0000_deep_wrecker",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1746280401266,
+      "tag": "0001_safe_supreme_intelligence",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1746285901447,
+      "tag": "0002_messy_war_machine",
+      "breakpoints": true
     }
   ]
 }
