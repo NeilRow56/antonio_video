@@ -2,7 +2,7 @@ import { db } from '@/db'
 import { z } from 'zod'
 import { videos } from '@/db/schema'
 import { createTRPCRouter, protectedProcedure } from '@/trpc/init'
-import { eq, and, or, gt, desc } from 'drizzle-orm'
+import { eq, and, or, lt, desc } from 'drizzle-orm'
 
 export const studioRouter = createTRPCRouter({
   getMany: protectedProcedure
@@ -29,10 +29,10 @@ export const studioRouter = createTRPCRouter({
             eq(videos.userId, userId),
             cursor
               ? or(
-                  gt(videos.updatedAt, cursor.updatedAt),
+                  lt(videos.updatedAt, cursor.updatedAt),
                   and(
                     eq(videos.updatedAt, cursor.updatedAt),
-                    gt(videos.id, cursor.id)
+                    lt(videos.id, cursor.id)
                   )
                 )
               : undefined
