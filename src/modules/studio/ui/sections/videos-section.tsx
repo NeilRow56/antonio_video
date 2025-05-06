@@ -13,7 +13,8 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table'
-import Link from 'next/link'
+
+import { useRouter } from 'next/navigation'
 
 export const VideosSection = () => {
   return (
@@ -26,6 +27,7 @@ export const VideosSection = () => {
 }
 
 const VideosSectionSuspense = () => {
+  const router = useRouter()
   const [videos, query] = trpc.studio.getMany.useSuspenseInfiniteQuery(
     {
       limit: DEFAULT_LIMIT
@@ -53,27 +55,23 @@ const VideosSectionSuspense = () => {
             {videos.pages
               .flatMap(page => page.items)
               .map(video => (
-                <Link
+                <TableRow
+                  onClick={() => router.push(`/studio/videos/${video.id}`)}
                   key={video.id}
-                  href={`/studio/videos/${video.id}`}
-                  passHref
-                  legacyBehavior
+                  className='cursor-pointer'
                 >
-                  <TableRow className='cursor-pointer'>
-                    <TableCell>{video.title}</TableCell>
-                    <TableCell>visibility</TableCell>
-                    <TableCell>status</TableCell>
-                    <TableCell>date</TableCell>
-                    <TableCell>views</TableCell>
-                    <TableCell>comments</TableCell>
-                    <TableCell>likes</TableCell>
-                  </TableRow>
-                </Link>
+                  <TableCell>{video.title}</TableCell>
+                  <TableCell>visibility</TableCell>
+                  <TableCell>status</TableCell>
+                  <TableCell>date</TableCell>
+                  <TableCell>views</TableCell>
+                  <TableCell>comments</TableCell>
+                  <TableCell>likes</TableCell>
+                </TableRow>
               ))}
           </TableBody>
         </Table>
       </div>
-
       <InfiniteScroll
         isManual
         hasNextPage={query.hasNextPage}
