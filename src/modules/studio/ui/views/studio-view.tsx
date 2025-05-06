@@ -6,7 +6,13 @@ interface StudioViewProps {
 
 export const StudioView = ({}: StudioViewProps) => {
   return (
-    <div className='mx-auto mb-10 flex max-w-[2400px] flex-col gap-y-6 px-4 pt-2.5'>
+    <div className='flex flex-col gap-y-6 px-4 pt-2.5'>
+      <div className='px-4'>
+        <h1 className='text-2xl font-bold'>Channel content</h1>
+        <p className='text-muted-foreground text-xs'>
+          Manage your channel content and videos
+        </p>
+      </div>
       <VideosSection />
     </div>
   )
