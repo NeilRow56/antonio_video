@@ -22,6 +22,7 @@ export const VideoThumbnail = ({
           src={imageUrl ?? '/placeholder.svg'}
           alt={title}
           fill
+          sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
           className='size-full w-full object-cover group-hover:opacity-0'
         />
         <Image
@@ -29,6 +30,7 @@ export const VideoThumbnail = ({
           src={previewUrl ?? '/placeholder.svg'}
           alt={title}
           fill
+          sizes='(max-width: 320px) 280px, (max-width: 480px) 440px, 800px'
           className='size-full w-full object-cover opacity-0 group-hover:opacity-100'
         />
       </div>

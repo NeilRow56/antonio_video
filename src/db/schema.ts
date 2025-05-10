@@ -10,6 +10,12 @@ import {
 
 import { relations } from 'drizzle-orm'
 
+import {
+  createInsertSchema,
+  createSelectSchema,
+  createUpdateSchema
+} from 'drizzle-zod'
+
 export const users = pgTable(
   'users',
   {
@@ -82,6 +88,10 @@ export const videos = pgTable('videos', {
     .defaultNow()
     .$onUpdate(() => new Date())
 })
+
+export const videoInsertSchema = createInsertSchema(videos)
+export const videoUpdateSchema = createUpdateSchema(videos)
+export const videoSelectSchema = createSelectSchema(videos)
 
 // Not needed for this project
 export const videoRelations = relations(videos, ({ one }) => ({
