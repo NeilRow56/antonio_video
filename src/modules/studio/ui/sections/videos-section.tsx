@@ -20,7 +20,8 @@ import { VideoThumbnail } from '@/modules/videos/ui/components/video-thumbnail'
 import { snakeCaseToTitle } from '@/lib/utils'
 import { Globe2Icon, LockIcon } from 'lucide-react'
 import { Skeleton } from '@/components/ui/skeleton'
-import Link from 'next/link'
+
+import { useRouter } from 'next/navigation'
 
 export const VideosSection = () => {
   return (
@@ -85,7 +86,7 @@ const VideoSectionSkeleton = () => {
 }
 
 const VideosSectionSuspense = () => {
-  // const router = useRouter()
+  const router = useRouter()
   const [videos, query] = trpc.studio.getMany.useSuspenseInfiniteQuery(
     {
       limit: DEFAULT_LIMIT
@@ -113,64 +114,61 @@ const VideosSectionSuspense = () => {
             {videos.pages
               .flatMap(page => page.items)
               .map(video => (
-                <Link
-                  legacyBehavior
+                // <Link
+                //   key={video.id}
+                //   href={`/studio/videos/${video.id}`}
+                //   className='contents'
+                // >
+                <TableRow
+                  onClick={() => router.push(`/studio/videos/${video.id}`)}
                   key={video.id}
-                  href={`/studio/videos/${video.id}`}
-                  className='contents'
+                  className='cursor-pointer'
                 >
-                  <TableRow
-                    // onClick={() => router.push(`/studio/videos/${video.id}`)}
-
-                    className='cursor-pointer'
-                  >
-                    <TableCell>
-                      <div className='flex items-center gap-4 pl-6'>
-                        <div className='relative aspect-video w-36 shrink-0'>
-                          <VideoThumbnail
-                            imageUrl={video.thumbnailUrl}
-                            previewUrl={video.previewUrl}
-                            title={video.title}
-                            duration={video.duration}
-                          />
-                        </div>
-                        <div className='flex flex-col gap-y-1 overflow-hidden'>
-                          <span className='line-clamp-1 text-sm'>
-                            {video.title}
-                          </span>
-                          <span className='text-muted-foreground line-clamp-1 text-xs'>
-                            {video.description || 'No description'}
-                          </span>
-                        </div>
+                  <TableCell>
+                    <div className='flex items-center gap-4 pl-6'>
+                      <div className='relative aspect-video w-36 shrink-0'>
+                        <VideoThumbnail
+                          imageUrl={video.thumbnailUrl}
+                          previewUrl={video.previewUrl}
+                          title={video.title}
+                          duration={video.duration}
+                        />
                       </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className='flex items-center'>
-                        {video.visibility === 'private' ? (
-                          <LockIcon className='mr-2 size-4' />
-                        ) : (
-                          <Globe2Icon className='mr-2 size-4' />
-                        )}
-                        {snakeCaseToTitle(video.visibility)}
+                      <div className='flex flex-col gap-y-1 overflow-hidden'>
+                        <span className='line-clamp-1 text-sm'>
+                          {video.title}
+                        </span>
+                        <span className='text-muted-foreground line-clamp-1 text-xs'>
+                          {video.description || 'No description'}
+                        </span>
                       </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className='flex items-center'>
-                        {snakeCaseToTitle(video.muxStatus || 'Error')}
-                      </div>
-                    </TableCell>
-                    <TableCell className='truncate text-sm'>
-                      {format(new Date(video.createdAt), 'd MMM yyyy')}
-                    </TableCell>
-                    <TableCell className='text-right text-sm'>views</TableCell>
-                    <TableCell className='text-right text-sm'>
-                      comments
-                    </TableCell>
-                    <TableCell className='pr-6 text-right text-sm'>
-                      likes
-                    </TableCell>
-                  </TableRow>
-                </Link>
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <div className='flex items-center'>
+                      {video.visibility === 'private' ? (
+                        <LockIcon className='mr-2 size-4' />
+                      ) : (
+                        <Globe2Icon className='mr-2 size-4' />
+                      )}
+                      {snakeCaseToTitle(video.visibility)}
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <div className='flex items-center'>
+                      {snakeCaseToTitle(video.muxStatus || 'Error')}
+                    </div>
+                  </TableCell>
+                  <TableCell className='truncate text-sm'>
+                    {format(new Date(video.createdAt), 'd MMM yyyy')}
+                  </TableCell>
+                  <TableCell className='text-right text-sm'>views</TableCell>
+                  <TableCell className='text-right text-sm'>comments</TableCell>
+                  <TableCell className='pr-6 text-right text-sm'>
+                    likes
+                  </TableCell>
+                </TableRow>
+                // </Link>
               ))}
           </TableBody>
         </Table>

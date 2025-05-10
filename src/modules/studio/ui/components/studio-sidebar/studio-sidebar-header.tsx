@@ -36,7 +36,7 @@ export const StudioSidebarHeader = () => {
         <Tooltip>
           <TooltipTrigger asChild>
             <SidebarMenuButton asChild>
-              <Link href='/users/current'>
+              <Link href='/users/current' legacyBehavior>
                 <UserAvatar
                   imageUrl={user.imageUrl}
                   name={user.fullName ?? 'User'}
