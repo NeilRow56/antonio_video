@@ -99,6 +99,16 @@ const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
       toast.error('Something went wrong')
     }
   })
+  const restoreThumbnail = trpc.videos.restoreThumbnail.useMutation({
+    onSuccess: () => {
+      utils.studio.getMany.invalidate()
+      utils.studio.getOne.invalidate({ id: videoId })
+      toast.success('Video thumbnail restored')
+    },
+    onError: () => {
+      toast.error('Something went wrong')
+    }
+  })
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof videoUpdateSchema>>({
@@ -243,7 +253,11 @@ const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
                               <SparklesIcon className='mr-1 size-4' />
                               AI-generated
                             </DropdownMenuItem>
-                            <DropdownMenuItem>
+                            <DropdownMenuItem
+                              onClick={() =>
+                                restoreThumbnail.mutate({ id: videoId })
+                              }
+                            >
                               <RotateCcwIcon className='mr-1 size-4' />
                               Restore
                             </DropdownMenuItem>
